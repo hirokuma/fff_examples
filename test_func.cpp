@@ -203,6 +203,6 @@ TEST_F(test, access_4)
     int ret = my_access();
 
     ASSERT_EQ(-2, ret);
-    ASSERT_EQ(0, read_fake.call_count);     //2回呼んでる
+    ASSERT_EQ(0, read_fake.call_count);     //お呼びでない
 }
 
