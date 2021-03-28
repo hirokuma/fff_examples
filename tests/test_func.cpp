@@ -1,15 +1,15 @@
 //
 //https://github.com/meekrosoft/fff
 //
-#include "gtest/gtest.h"
+#include "fff/gtest/gtest.h"
 #include <string.h>
-#include "fff.h"
+#include "fff/fff.h"
 DEFINE_FFF_GLOBALS;
 
 extern "C" {
 
 //評価対象本体
-#include "func.c"
+#include "../func.c"
 }
 
 ////////////////////////////////////////////////////////////////////////
