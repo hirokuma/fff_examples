@@ -32,7 +32,7 @@ int my_access(void)
 
     uint8_t buf[20];
     ssize_t sz;
-    
+
     sz = write(sfd, WRT, sizeof(WRT));
     if (sz != sizeof(WRT)) {
         return -2;
