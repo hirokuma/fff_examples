@@ -1,16 +1,13 @@
 all: mk_fff
 	mkdir -p build
-	g++ -o build/tst test_func.cpp fff/build/*.o -pthread
+	g++ -Ifff/build/_deps/googletest-src/googletest/include -o build/tst test_func.cpp -Lfff/build/lib -lgtest -lgtest_main -pthread
 
 mk_fff:
 	mkdir -p fff/build
-	cd fff/gtest; $(MAKE) all
+	cd fff && cmake -B build -DFFF_GENERATE=ON -DFFF_UNIT_TESTING=ON && cmake --build build && cd ..
 
 test:
 	./build/tst
 
 clean: 
-	cd fff/gtest; $(MAKE) clean
 	rm -rf fff/build build
-
-#	g++ -o build/tst test_func.cpp fff/build/gtest-all.o fff/build/gtest-main.o -pthread

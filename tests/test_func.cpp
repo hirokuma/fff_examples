@@ -1,7 +1,7 @@
 //
 //https://github.com/meekrosoft/fff
 //
-#include "fff/gtest/gtest.h"
+#include "gtest/gtest.h"
 #include <string.h>
 #include "fff/fff.h"
 DEFINE_FFF_GLOBALS;
@@ -69,7 +69,7 @@ TEST_F(test, open_3)
 TEST_F(test, close_1)
 {
     sfd = 5;
-    
+
     my_close();
 
     ASSERT_EQ(-1, sfd);
@@ -78,7 +78,7 @@ TEST_F(test, close_1)
 TEST_F(test, close_2)
 {
     sfd = -1;
-    
+
     my_close();
 
     ASSERT_EQ(-1, sfd);
