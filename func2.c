@@ -8,7 +8,7 @@
 
 static int sfd = -1;
 
-int my_open(const char *pTty)
+int my_open2(const char *pTty)
 {
     if (sfd != -1) {
         return -100;
@@ -22,13 +22,13 @@ int my_open(const char *pTty)
     return sfd;
 }
 
-void my_close(void)
+void my_close2(void)
 {
     close(sfd);
     sfd = -1;
 }
 
-int my_access(void)
+int my_access2(void)
 {
     const uint8_t WRT[] = { 0x00, 0x01, 0x02, 0x03, 0x04 };
 

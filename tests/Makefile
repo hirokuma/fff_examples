@@ -1,13 +1,31 @@
-all: mk_fff
-	mkdir -p build
-	g++ -Ifff/build/_deps/googletest-src/googletest/include -o build/tst test_func.cpp -Lfff/build/lib -lgtest -lgtest_main -pthread
+BUILD_DIR:=build
+TEST_BIN:=tst
+FFF_BUILD_DIR:=fff/build
 
+TEST_SRCS:=\
+	test_main.cpp \
+	test_func.cpp \
+	test_func2.cpp
+
+CFLAGS += -I$(FFF_BUILD_DIR)/_deps/googletest-src/googletest/include
+#CFLAGS += -DFFF_GCC_FUNCTION_ATTRIBUTES="__attribute__((weak))"
+LDFLAGS += -L$(FFF_BUILD_DIR)/lib -lgtest -lgtest_main
+
+all: mk_fff
+	mkdir -p $(BUILD_DIR)
+	g++ $(CFLAGS) -o $(BUILD_DIR)/$(TEST_BIN) $(TEST_SRCS) $(LDFLAGS) -pthread
+
+ifeq ($(wildcard $(FFF_BUILD_DIR)),)
 mk_fff:
-	mkdir -p fff/build
+	mkdir -p $(FFF_BUILD_DIR)
 	cd fff && cmake -B build -DFFF_GENERATE=ON -DFFF_UNIT_TESTING=ON && cmake --build build && cd ..
+else
+mk_fff:
+	@echo
+endif
 
 test:
-	./build/tst
+	$(BUILD_DIR)/$(TEST_BIN)
 
 clean: 
-	rm -rf fff/build build
+	rm -rf $(FFF_BUILD_DIR) $(BUILD_DIR)
