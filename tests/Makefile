@@ -7,8 +7,8 @@ TEST_SRCS:=\
 	test_func.cpp \
 	test_func2.cpp
 
+CFLAGS += -std=c++11
 CFLAGS += -I$(FFF_BUILD_DIR)/_deps/googletest-src/googletest/include
-#CFLAGS += -DFFF_GCC_FUNCTION_ATTRIBUTES="__attribute__((weak))"
 LDFLAGS += -L$(FFF_BUILD_DIR)/lib -lgtest -lgtest_main
 
 all: mk_fff

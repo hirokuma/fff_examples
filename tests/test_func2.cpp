@@ -91,31 +91,28 @@ TEST_F(TestFunc2, access_1)
 {
     sfd = 5;
 
-    class dummy {
-    public:
-        static ssize_t read(int fd, void *p, size_t sz) {
-            static int count = 0;
-            int ret = -1;
-            uint8_t* buf = (uint8_t *)p;
-            switch (count) {
-            case 0:
-                ret = 5;
-                buf[4] = 0xff;
-                break;
-            case 1:
-                ret = 3;
-                buf[2] = 0x35;
-                break;
-            default:
-                assert(0);
-            }
-            count++;
-            return ret;
+    auto dummy_read = [](int fd, void *p, size_t sz) -> ssize_t {
+        static int count = 0;
+        int ret = -1;
+        uint8_t* buf = (uint8_t *)p;
+        switch (count) {
+        case 0:
+            ret = 5;
+            buf[4] = 0xff;
+            break;
+        case 1:
+            ret = 3;
+            buf[2] = 0x35;
+            break;
+        default:
+            assert(0);
         }
+        count++;
+        return ret;
     };
 
     write_fake.return_val = 5;
-    read_fake.custom_fake = dummy::read;
+    read_fake.custom_fake = dummy_read;
 
     int ret = my_access2();
 
@@ -127,31 +124,28 @@ TEST_F(TestFunc2, access_2)
 {
     sfd = 5;
 
-    class dummy {
-    public:
-        static ssize_t read(int fd, void *p, size_t sz) {
-            static int count = 0;
-            int ret = -1;
-            uint8_t* buf = (uint8_t *)p;
-            switch (count) {
-            case 0:
-                ret = 5;
-                buf[4] = 0xfe;      //★期待外
-                break;
-            case 1:
-                ret = 3;
-                buf[2] = 0x35;
-                break;
-            default:
-                assert(0);
-            }
-            count++;
-            return ret;
+    auto dummy_read = [](int fd, void *p, size_t sz) -> ssize_t {
+        static int count = 0;
+        int ret = -1;
+        uint8_t* buf = (uint8_t *)p;
+        switch (count) {
+        case 0:
+            ret = 5;
+            buf[4] = 0xfe;      //★期待外
+            break;
+        case 1:
+            ret = 3;
+            buf[2] = 0x35;
+            break;
+        default:
+            assert(0);
         }
+        count++;
+        return ret;
     };
 
     write_fake.return_val = 5;
-    read_fake.custom_fake = dummy::read;
+    read_fake.custom_fake = dummy_read;
 
     int ret = my_access2();
 
@@ -163,31 +157,28 @@ TEST_F(TestFunc2, access_3)
 {
     sfd = 5;
 
-    class dummy {
-    public:
-        static ssize_t read(int fd, void *p, size_t sz) {
-            static int count = 0;
-            int ret = -1;
-            uint8_t* buf = (uint8_t *)p;
-            switch (count) {
-            case 0:
-                ret = 5;
-                buf[4] = 0xff;
-                break;
-            case 1:
-                ret = 3;
-                buf[2] = 0x34;      //★期待外
-                break;
-            default:
-                assert(0);
-            }
-            count++;
-            return ret;
+    auto dummy_read = [](int fd, void *p, size_t sz) -> ssize_t {
+        static int count = 0;
+        int ret = -1;
+        uint8_t* buf = (uint8_t *)p;
+        switch (count) {
+        case 0:
+            ret = 5;
+            buf[4] = 0xff;
+            break;
+        case 1:
+            ret = 3;
+            buf[2] = 0x34;      //★期待外
+            break;
+        default:
+            assert(0);
         }
+        count++;
+        return ret;
     };
 
     write_fake.return_val = 5;
-    read_fake.custom_fake = dummy::read;
+    read_fake.custom_fake = dummy_read;
 
     int ret = my_access2();
 
